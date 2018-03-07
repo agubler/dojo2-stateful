@@ -5,9 +5,9 @@ import WidgetBase from '@dojo/widget-core/WidgetBase';
 import inject from '@dojo/widget-core/decorators/inject';
 import Registry from '@dojo/widget-core/Registry';
 import Injector from '@dojo/widget-core/Injector';
-import { Constructor, VNode } from '@dojo/widget-core/interfaces';
+import { Constructor, DNode } from '@dojo/widget-core/interfaces';
 
-const STATEFUL_KEY = Symbol();
+export const STATEFUL_KEY = Symbol();
 
 export class StatefulInjector extends Evented {
 	private _containerMap = new Map();
@@ -31,9 +31,9 @@ export abstract class Container<S = {}> {
 	private _listeners: Function[] = [];
 	protected abstract state: S;
 
-	public setState(state: Partial<S>) {
+	protected setState(state: Partial<S>) {
 		this.state = { ...(this.state as any), ...(state as any) };
-		this.invalidate();
+		this._invalidate();
 	}
 
 	public isRegistered = (fn: Function) => {
@@ -54,7 +54,7 @@ export abstract class Container<S = {}> {
 		};
 	};
 
-	public invalidate = () => {
+	private _invalidate = () => {
 		this._listeners.forEach((listener: Function) => {
 			listener();
 		});
@@ -63,7 +63,7 @@ export abstract class Container<S = {}> {
 
 export interface SubscribeProperties {
 	to: Constructor<Container>[];
-	render(...c: Container[]): VNode;
+	render(...c: Container[]): DNode | DNode[];
 }
 
 @inject({

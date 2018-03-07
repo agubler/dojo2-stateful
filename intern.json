@@ -33,14 +33,6 @@
 			}
 		]
 	},
-	"node" : {
-		"plugins": [
-			{
-				"script": "./_build/tests/support/loadJsdom.js",
-				"useLoader": true
-			}
-		]
-	},
 	"coverage": [
 		"./_build/src/**/*.js"
 	],

@@ -1,1 +1,1 @@
-/* import tests here */
+import './index';
