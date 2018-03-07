@@ -36,6 +36,10 @@ export abstract class Container<S = {}> {
 		this.invalidate();
 	}
 
+	public isRegistered = (fn: Function) => {
+		return this._listeners.indexOf(fn) !== -1;
+	};
+
 	public register = (fn: Function) => {
 		if (this._listeners.indexOf(fn) === -1) {
 			this._listeners.push(fn);
@@ -88,12 +92,14 @@ export class Subscribe extends WidgetBase<SubscribeProperties> {
 				containers.push(container);
 				addInstance(Container, container);
 			}
-			container.register(this._invalidate);
+			if (!container.isRegistered(this._invalidate)) {
+				this.own(container.register(this._invalidate));
+			}
 		});
 		return containers;
 	}
 
-	render() {
+	protected render() {
 		return this.properties.render.apply(null, this._createContainer());
 	}
 }
