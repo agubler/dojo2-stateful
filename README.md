@@ -15,6 +15,13 @@ Simple state mechanism that enables sharing state across your application widget
 Simple Counter Example:
 
 ```ts
+import { ProjectorMixin } from '@dojo/widget-core/mixins/Projector';
+import Registry from '@dojo/widget-core/Registry';
+import { WidgetBase } from '@dojo/widget-core/WidgetBase';
+import { w, v } from '@dojo/widget-core/d';
+import { createStatefulProvider, Container, Subscribe } from 'dojo2-stateful';
+
+
 interface CounterState {
 	count: number
 };
