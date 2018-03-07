@@ -1,7 +1,7 @@
 {
 	"capabilities+": {
-		"project": "Dojo 2",
-		"name": "@dojo/widget-core"
+		"project": "dojo2-stateful",
+		"name": "dojo2-stateful"
 	},
 	"environments": [
 		{ "browserName": "node" }

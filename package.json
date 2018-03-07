@@ -6,15 +6,14 @@
     "npm": ">=3.0.0"
   },
   "private": true,
-  "homepage": "http://dojo.io",
   "bugs": {
-    "url": "https://github.com/dojo/dojo2-stateful/issues"
+    "url": "https://github.com/agubler/dojo2-stateful/issues"
   },
   "license": "BSD-3-Clause",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dojo/dojo2-stateful.git"
+    "url": "https://github.com/agubler/dojo2-stateful.git"
   },
   "scripts": {
     "precommit": "lint-staged",
