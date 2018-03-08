@@ -1,6 +1,6 @@
 # dojo2-stateful
 
-A simple state lib for Dojo 2 inspired by [Unstated](https://github.com/jamiebuilds/unstated).
+A simple state lib for Dojo 2 inspired by [Unstated](https://github.com/jamiebuilds/unstated). Check out this simple [demo]([here](https://agubler.github.io/dojo2-stateful-example/)).
 
 ## How do I use this package?
 
@@ -60,3 +60,5 @@ const counter = new Counter();
 counter.setProperties({ registry });
 counter.append();
 ```
+
+A slightly more complicated example of the counter can be found [here](https://agubler.github.io/dojo2-stateful-example/) with the source [here](https://github.com/agubler/dojo2-stateful-example).
