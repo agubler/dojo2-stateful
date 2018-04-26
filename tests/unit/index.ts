@@ -17,7 +17,7 @@ describe('stateful', () => {
 			};
 		}
 
-		registry.defineInjector(STATEFUL_KEY, injector);
+		registry.defineInjector(STATEFUL_KEY, () => () => statefulInjector);
 		let renderCounter = 0;
 		const subscribe = new Subscribe();
 		let instantiatedContainer: TestContainer;

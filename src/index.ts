@@ -22,9 +22,10 @@ export class StatefulInjector extends Evented {
 }
 
 export function createStatefulProvider(registry: Registry) {
-	const statefulInjector = new StatefulInjector();
-	const injector = new Injector(statefulInjector);
-	registry.defineInjector(STATEFUL_KEY, injector);
+	registry.defineInjector(STATEFUL_KEY, () => {
+		const statefulInjector = new StatefulInjector();
+		return () => statefulInjector;
+	});
 }
 
 export abstract class Container<S = {}> {
