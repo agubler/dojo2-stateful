@@ -1,6 +1,6 @@
 # dojo2-stateful
 
-A simple state lib for Dojo 2 inspired by [Unstated](https://github.com/jamiebuilds/unstated). Check out this simple [demo](https://agubler.github.io/dojo2-stateful-example/).
+A simple state lib for Dojo 2 inspired by [Unstated](https://github.com/jamiebuilds/unstated). Check out this simple [codesandbox](https://codesandbox.io/s/l58rkpl6j9).
 
 ## How do I use this package?
 
