@@ -1,13 +1,11 @@
-import Symbol from '@dojo/shim/Symbol';
-import Evented from '@dojo/core/Evented';
-import Map from '@dojo/shim/Map';
-import WidgetBase from '@dojo/widget-core/WidgetBase';
-import inject from '@dojo/widget-core/decorators/inject';
-import Registry from '@dojo/widget-core/Registry';
-import Injector from '@dojo/widget-core/Injector';
-import { Constructor, DNode } from '@dojo/widget-core/interfaces';
+import Map from '@dojo/framework/shim/Map';
+import Evented from '@dojo/framework/core/Evented';
+import WidgetBase from '@dojo/framework/widget-core/WidgetBase';
+import inject from '@dojo/framework/widget-core/decorators/inject';
+import Registry from '@dojo/framework/widget-core/Registry';
+import { Constructor, DNode } from '@dojo/framework/widget-core/interfaces';
 
-export const STATEFUL_KEY = Symbol();
+export const STATEFUL_KEY = '__STATEFUL_KEY';
 
 export class StatefulInjector extends Evented {
 	private _containerMap = new Map();
