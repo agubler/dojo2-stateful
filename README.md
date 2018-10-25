@@ -1,11 +1,11 @@
 # dojo2-stateful
 
-A simple state lib for Dojo 2 inspired by [Unstated](https://github.com/jamiebuilds/unstated). Check out this simple [codesandbox](https://codesandbox.io/s/l58rkpl6j9).
+A simple state lib for Dojo inspired by [Unstated](https://github.com/jamiebuilds/unstated). Check out this simple [codesandbox](https://codesandbox.io/s/l58rkpl6j9).
 
 ## How do I use this package?
 
 ```
-npm install dojo2-stateful
+npm install dojo-stateful
 ```
 
 ## Features
@@ -15,11 +15,11 @@ Simple state mechanism that enables sharing state across your application widget
 Simple Counter Example:
 
 ```ts
-import { ProjectorMixin } from '@dojo/widget-core/mixins/Projector';
-import Registry from '@dojo/widget-core/Registry';
-import { WidgetBase } from '@dojo/widget-core/WidgetBase';
-import { w, v } from '@dojo/widget-core/d';
-import { createStatefulProvider, Container, Subscribe } from 'dojo2-stateful';
+import renderer from '@dojo/framework/widget-core/vdom';
+import Registry from '@dojo/framework/widget-core/Registry';
+import WidgetBase from '@dojo/framework/widget-core/WidgetBase';
+import { w, v } from '@dojo/framework/widget-core/d';
+import { createStatefulProvider, Container, Subscribe } from 'dojo-stateful';
 
 
 interface CounterState {
@@ -40,7 +40,7 @@ class CounterContainer extends Container<CounterState> {
 	}
 }
 
-class Counter extends ProjectorMixin(WidgetBase) {
+class Counter extends WidgetBase {
 	protected render() {
 		return w(Subscribe, { to: [CounterContainer], render: (counter: CounterContainer) => {
 			return v('div', [
@@ -56,9 +56,8 @@ const registry = new Registry();
 // create state provider for the registry
 createStatedProvider(registry);
 
-const counter = new Counter();
-counter.setProperties({ registry });
-counter.append();
+const r = renderer(() => w(Counter, {});
+r.mount({ registry });
 ```
 
-A slightly more complicated example of the counter can be found [here](https://agubler.github.io/dojo2-stateful-example/) with the source [here](https://github.com/agubler/dojo2-stateful-example).
+<!-- A slightly more complicated example of the counter can be found [here](https://agubler.github.io/dojo2-stateful-example/) with the source [here](https://github.com/agubler/dojo2-stateful-example). -->

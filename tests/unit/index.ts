@@ -1,15 +1,23 @@
-const { beforeEach, describe, it } = intern.getInterface('bdd');
+const { describe, it } = intern.getInterface('bdd');
 const { assert } = intern.getPlugin('chai');
 import { stub } from 'sinon';
-import { Registry } from '@dojo/widget-core/Registry';
+import { Registry } from '@dojo/framework/widget-core/Registry';
 import { createStatefulProvider, STATEFUL_KEY, StatefulInjector, Subscribe, Container } from '../../src';
-import Injector from '@dojo/widget-core/Injector';
+import { VNode } from '@dojo/framework/widget-core/interfaces';
+
+function createTestSubscribe(registry: Registry) {
+	return class extends Subscribe {
+		constructor() {
+			super();
+			this.registry.base = registry;
+		}
+	};
+}
 
 describe('stateful', () => {
 	it('Subscribe', () => {
 		const registry = new Registry();
 		const statefulInjector = new StatefulInjector();
-		const injector = new Injector(statefulInjector);
 
 		class TestContainer extends Container {
 			state = {
@@ -19,33 +27,38 @@ describe('stateful', () => {
 
 		registry.defineInjector(STATEFUL_KEY, () => () => statefulInjector);
 		let renderCounter = 0;
-		const subscribe = new Subscribe();
+		const TestSubscribe = createTestSubscribe(registry);
+		const subscribe = new TestSubscribe();
 		let instantiatedContainer: TestContainer;
-		subscribe.__setCoreProperties__({ baseRegistry: registry, bind: subscribe });
-		subscribe.__setProperties__({
-			to: [TestContainer],
-			render: (container: TestContainer) => {
-				instantiatedContainer = container;
-				return container.state.foo;
-			}
-		});
-		let renderResult = subscribe.__render__();
-		assert.strictEqual(renderResult, 'bar');
-		const secondSubscribe = new Subscribe();
-		secondSubscribe.__setCoreProperties__({ baseRegistry: registry, bind: subscribe });
-		secondSubscribe.__setProperties__({
-			to: [TestContainer],
-			render: (container: TestContainer) => {
-				renderCounter++;
-				assert.strictEqual(container, instantiatedContainer);
-				return container.state.foo;
-			}
-		});
-		renderResult = secondSubscribe.__render__();
-		assert.strictEqual(renderResult, 'bar');
+		subscribe.__setProperties__(
+			{
+				to: [TestContainer],
+				render: (container: TestContainer) => {
+					instantiatedContainer = container;
+					return container.state.foo;
+				}
+			},
+			subscribe
+		);
+		let renderResult = subscribe.__render__() as VNode;
+		assert.strictEqual(renderResult.text, 'bar');
+		const secondSubscribe = new TestSubscribe();
+		secondSubscribe.__setProperties__(
+			{
+				to: [TestContainer],
+				render: (container: TestContainer) => {
+					renderCounter++;
+					assert.strictEqual(container, instantiatedContainer);
+					return container.state.foo;
+				}
+			},
+			subscribe
+		);
+		renderResult = secondSubscribe.__render__() as VNode;
+		assert.strictEqual(renderResult.text, 'bar');
 		assert.strictEqual(renderCounter, 1);
-		renderResult = secondSubscribe.__render__();
-		assert.strictEqual(renderResult, 'bar');
+		renderResult = secondSubscribe.__render__() as VNode;
+		assert.strictEqual(renderResult.text, 'bar');
 		assert.strictEqual(renderCounter, 2);
 	});
 
