@@ -1,6 +1,6 @@
 {
   "name": "dojo-stateful",
-  "version": "1.0.0-pre",
+  "version": "1.0.0",
   "description": "Small stateful lib for working with Dojo widgets",
   "engines": {
     "npm": ">=3.0.0"
